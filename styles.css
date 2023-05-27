@@ -1,0 +1,53 @@
+body{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+hr{
+    margin: 0;
+    border-bottom: 0;
+}
+
+/* title */
+nav{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+#question-mark{
+    width: 50px;
+    height: 35px;
+}
+
+button{
+    background-color: #3E2F5B;
+    border-radius: 10px;
+    color: white;
+}
+
+#button1{
+    background-color: white;
+}
+
+button:hover{
+    border: 1px dashed orange;
+    background-color: whitesmoke;
+    color: black;
+}
+
+/* Play-area */
+#play-area{
+    width: 100%;
+    height: 85vh;
+}
+
+/* box */
+#play-area > #box{
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    transform: translate(0px, 0px);
+}
+
