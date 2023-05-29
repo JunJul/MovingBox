@@ -7,11 +7,6 @@ let box = document.querySelector("#box");
 let x = 0;
 let y = 0;
 
-// The width and height of the play area
-// including area has taken by the width and the height of the box
-let playAreaWidth = playArea.clientWidth - box.clientWidth;
-let playAreaHeight = playArea.clientHeight - box.clientHeight;
-
 // When key pressing, start moving
 document.addEventListener("keypress", keyPressMoving);
 
@@ -43,9 +38,34 @@ function keyPressMoving(e){
     }
 }
 
+// check if the box on the edge of the x or y component 
+// The width and height of the play area initially has taken by the width and the height of the box
+// so minus 100
+function checkDirection(direction, distance){
+    if(direction == "x"){
+        let playAreaWidth = playArea.clientWidth - 100;
+
+        if(((x + distance) > playAreaWidth) || ((x + distance) < 0)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }else{
+        let playAreaHeight = playArea.clientHeight - 100;
+
+        if(((y + distance) > playAreaHeight) || ((y + distance) < 0)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
 function movingXDirection(distance){
     // (x + distance) < 0 is (x - distance) < 0 when moving with negative x
-    if(((x + distance) > playAreaWidth) || ((x + distance) < 0)){
+    if(checkDirection("x", distance)){
         alert("The box is on the edge of the x axis.");
     }
     else{
@@ -56,7 +76,7 @@ function movingXDirection(distance){
 }
 
 function movingYDirection(distance){
-    if(((y + distance) > playAreaHeight) || ((y + distance) < 0)){
+    if(checkDirection("y", distance)){
         alert("The box is on the edge of the y axis.");
     }
     else{
