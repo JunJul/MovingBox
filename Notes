@@ -1,0 +1,5 @@
+1. keep the x and the y position as global variables
+
+2. we should know the different width and height based on the screen size
+
+3. always call client width and height of play-area before comparing values in checkDirection() 

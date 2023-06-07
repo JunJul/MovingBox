@@ -12,7 +12,7 @@ document.addEventListener("keypress", keyPressMoving);
 
 function keyPressMoving(e){
     // Default moving distance
-    let distance = 50;
+    let distance = 10;
 
     // Get the key and convert it to lowercase
     let key = e.key;
@@ -21,15 +21,15 @@ function keyPressMoving(e){
     // console.log(key.key);
     switch(key){
         case "d":
-            movingXDirection(distance);
+            movingRight(distance);
         break;
         // moving with negative x direction to move to left
         case "a":
-            movingXDirection(-distance); 
+            movingLeft(distance); 
         break;
 
         case "w":
-            movingYDirection(-distance); 
+            movingYDirection(distance); 
         break;
 
         case "s":
@@ -38,50 +38,114 @@ function keyPressMoving(e){
     }
 }
 
-// check if the box on the edge of the x or y component 
-// The width and height of the play area initially has taken by the width and the height of the box
-// so minus 100
-function checkDirection(direction, distance){
-    if(direction == "x"){
-        let playAreaWidth = playArea.clientWidth - 100;
+// calculate the width in percentage
+function getBoxWidth(){
+    let boxWidth = box.clientWidth;
+    let playAreaWidth = playArea.clientWidth;
 
-        if(((x + distance) > playAreaWidth) || ((x + distance) < 0)){
-            return true;
+    let boxPercentWidth = Math.ceil((boxWidth / playAreaWidth)*100);
+    return boxPercentWidth;
+}
+
+// calcualte the height in percentage
+function getBoxHeight(){
+    let boxHeight = box.clientHeight;
+    let playAreaHeight = playArea.clientHeight;
+
+    let boxPercentHeight = Math.ceil((boxHeight / playAreaHeight)*100);
+    return boxPercentHeight;
+}
+
+// check if the box move out of the play area toward right direction
+function checkMovingRight(distance){
+    let playAreaWidth = 100 - getBoxWidth();
+
+    if((x + distance) > playAreaWidth)
+        return false;
+
+    return true;
+}
+
+// check if the box move out of the play area toward left direction
+function checkMovingLeft(distance){
+    let playAreaWidth = 100 - getBoxWidth();
+
+    if((x - distance) < 0)
+        return false;
+
+    return true;
+}
+
+// check if the box move out of the top of the play area
+function checkMovingTop(distance){
+    let playAreaHeight = 100 - getBoxHeight();
+
+    if((y - distance) < 0)
+        return false;
+
+    return true;
+}
+
+// check if the box moves out of the botton pf the play area
+function checkMovingDown(distance){
+
+    return true;
+}
+
+// How many right space does the box can move 
+function get_RightSpace(){
+    let playAreaWidth = 100 - calculateXLimit();
+    let distance = playAreaWidth - x;
+
+    return distance;
+}
+
+
+// How many left space does the box can move
+function get_LeftSpace(){
+    return x;
+}
+
+// move to right
+function movingRight(distance){
+    if(checkMovingRight(distance)){
+        x += distance;
+        box.style.left = x + "%";
+    }
+    else{
+        let playAreaWidth = 100 - getBoxWidth();
+
+        if(x < playAreaWidth){
+            x += get_RightSpace();
+            box.style.left = x + "%";
         }
         else{
-            return false;
-        }
-
-    }else{
-        let playAreaHeight = playArea.clientHeight - 100;
-
-        if(((y + distance) > playAreaHeight) || ((y + distance) < 0)){
-            return true;
-        }else{
-            return false;
+            alert("The box cannot move to right");
         }
     }
 }
 
-function movingXDirection(distance){
-    // (x + distance) < 0 is (x - distance) < 0 when moving with negative x
-    if(checkDirection("x", distance)){
-        alert("The box is on the edge of the x axis.");
+// move to left
+function movingLeft(distance){
+    if(checkMovingLeft(distance)){
+        x -= distance;
+        box.style.left = x + "%";
     }
     else{
-        x += distance;
-        let translate = "translate(" + x + "px," + y + "px)";
-        box.style.transform = translate;
+        let playAreaWidth = 100 - getBoxWidth();
+
+        if(x > 0){
+            x -= get_LeftSpace();
+            box.style.left = x + "%";
+        }
+        else{
+            alert("The box cannot move to left");
+        }
     }
 }
 
 function movingYDirection(distance){
-    if(checkDirection("y", distance)){
-        alert("The box is on the edge of the y axis.");
-    }
-    else{
-        y += distance;
-        let translate = "translate(" + x + "px," + y + "px)";
-        box.style.transform = translate;
-    }
+    y += distance;
+    box.style.top = y + "%";
 }
+

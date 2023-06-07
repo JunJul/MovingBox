@@ -47,10 +47,9 @@ button:hover{
 
 /* box */
 #play-area > #box{
-    width: 100px;
-    height: 100px;
+    width: 10%;
+    height: 15%;
     background-color: red;
     position: absolute;
-    left: calc(100% - 100px);
 }
 
