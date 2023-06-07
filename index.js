@@ -60,7 +60,7 @@ function getBoxHeight(){
 function checkMovingRight(distance){
     let playAreaWidth = 100 - getBoxWidth();
 
-    if((x + distance) > playAreaWidth)
+    if((x + distance) >= playAreaWidth)
         return false;
 
     return true;
@@ -68,9 +68,7 @@ function checkMovingRight(distance){
 
 // check if the box move out of the play area toward left direction
 function checkMovingLeft(distance){
-    let playAreaWidth = 100 - getBoxWidth();
-
-    if((x - distance) < 0)
+    if((x - distance) <= 0)
         return false;
 
     return true;
@@ -78,9 +76,7 @@ function checkMovingLeft(distance){
 
 // check if the box move out of the top of the play area
 function checkMovingTop(distance){
-    let playAreaHeight = 100 - getBoxHeight();
-
-    if((y - distance) < 0)
+    if((y - distance) <= 0)
         return false;
 
     return true;
@@ -88,13 +84,17 @@ function checkMovingTop(distance){
 
 // check if the box moves out of the botton pf the play area
 function checkMovingDown(distance){
+    let playAreaHeight = 100 - getBoxHeight();
+
+    if((x + distance) >= playAreaHeight)
+        return false;
 
     return true;
 }
 
 // How many right space does the box can move 
 function get_RightSpace(){
-    let playAreaWidth = 100 - calculateXLimit();
+    let playAreaWidth = 100 - getBoxWidth();
     let distance = playAreaWidth - x;
 
     return distance;
